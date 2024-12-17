@@ -37,7 +37,6 @@ function App() {
           <Link className="button" to="/update-contact">Cập nhật thông tin liên hệ</Link>
         </> : wheel
       } 
-      
     </>
   )
 }

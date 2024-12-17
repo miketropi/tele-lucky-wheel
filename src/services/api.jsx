@@ -1,6 +1,16 @@
 import { db } from './firebase';
 import { collection, doc, setDoc, query, getDocs, getDoc, addDoc, where, limit, onSnapshot } from "firebase/firestore"; 
 
+const getUsers = async () => {
+  const q = await query(collection(db, 'a1aluckywheel'));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map(doc => {
+    let d = doc.data();
+    d.__id = doc.id
+    return d;
+  });
+}
+
 const findUserByTeleID = async (teleID) => {
   const q = query(collection(db, "a1aluckywheel"), where("teleuid", "==", teleID), limit(1));
   const querySnapshot = await getDocs(q);
@@ -31,4 +41,22 @@ const updateUser = async (id, data) => {
   await setDoc(doc(docRef, id), data, { merge: true });
 }
 
-export { findUserByTeleID, addUser, getGifts, updateUser }
+const updateGift = async (id, data) => {
+  const docRef = collection(db, 'gifts');
+  await setDoc(doc(docRef, id), data, { merge: true });
+}
+
+const listennerCollection = (collecton, callback) => {
+  const unsubscribe = onSnapshot(collection(db, collecton), (snapshot) => {
+    let res =  snapshot.docs.map(doc => {
+      let d = doc.data();
+      d.__id = doc.id
+      return d;
+    });
+    callback(res);
+  })
+
+  return unsubscribe;
+}
+
+export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift }
