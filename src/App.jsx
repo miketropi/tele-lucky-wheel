@@ -29,14 +29,18 @@ function App() {
   )
   return (
     <>
+      <div className="app-background-layer"></div>
       <UserInfo />
-      {/* { JSON.stringify(user) } */}
-      { 
-        user?.gift ? <>
-          <p>Cảm ơn bạn đã tham gia chương trình, phần quà của bạn là <strong style={{ background: 'black' }}>{ user.gift }</strong></p>
-          <Link className="button" to="/update-contact">Cập nhật thông tin liên hệ</Link>
-        </> : wheel
-      } 
+      <div className='wheel-container'>
+          {/* { JSON.stringify(user) } */}
+          { 
+            user?.gift ? <>
+              <p>Cảm ơn bạn đã tham gia chương trình, phần quà của bạn là <strong style={{ background: 'black' }}>{ user.gift }</strong></p>
+              <Link className="button" to="/update-contact">Cập nhật thông tin liên hệ</Link>
+            </> : wheel
+          } 
+      </div>
+     
     </>
   )
 }

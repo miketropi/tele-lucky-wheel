@@ -6,13 +6,14 @@ const GiftsTable = ({ gifts }) => {
   const { fn } = useAdminViewContext();
   const { onUpdateQtyGift } = fn;
   return <>
+    <h4>Gifts</h4>
     <table className="table">
       <thead>
         <tr>
-          <th></th>
+          <th>#</th>
           <th>Name</th>
           <th>Qty</th>
-          <th>Probability (%)</th>
+          <th>Probability</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +28,7 @@ const GiftsTable = ({ gifts }) => {
                 onUpdateQtyGift(g.__id, e.target.value)
               } } />
               </td>
-              <td>{ g?.probability }</td>
+              <td>{ g?.probability }%</td>
             </tr>
           })
         }
@@ -39,10 +40,12 @@ const GiftsTable = ({ gifts }) => {
 export default function AdminView() {
   const { users, gifts, fn } = useAdminViewContext();
   const { onTestReward } = fn;
-  return <div>
-    <GiftsTable gifts={ gifts } /> <button onClick={ onTestReward }>Test Reward</button>
-    {/* <div>{ JSON.stringify(users) }</div> */}
-    {/* <div>{ JSON.stringify(gifts) }</div> */}
-    
+  return <div className="admin-view">
+    <div className="container">
+      <GiftsTable gifts={ gifts } /> <button onClick={ onTestReward }>Test Reward</button>
+      {/* <div>{ JSON.stringify(users) }</div> */}
+      {/* <div>{ JSON.stringify(gifts) }</div> */}
+      
+    </div>
   </div>
 }

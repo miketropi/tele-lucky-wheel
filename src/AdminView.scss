@@ -1,11 +1,32 @@
+
+
 .table {
   border-collapse: collapse;
-  border: solid 1px black;
+  border: solid 1px #eee;
   background: white;
   color: black;
+  margin-bottom: 1em;
+  
+  thead {
+    background-color: #eee;
+  }
 
   th, td {
     padding: .5em;
-    border-bottom: solid 1px black;
+    border-bottom: solid 1px #eee;
+    text-align: left;
+  }
+}
+
+.admin-view {
+  input[type=text],
+  input[type=number] {
+    border: solid 1px #eee;
+    padding: .5em;;
+  }
+
+  .container {
+    width: 980px;
+    margin: 5em auto;
   }
 }
