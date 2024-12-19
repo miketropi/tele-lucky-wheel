@@ -59,4 +59,13 @@ const listennerCollection = (collecton, callback) => {
   return unsubscribe;
 }
 
-export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift }
+const addLog = async (userinfo, reward) => {
+  const docRef = await addDoc(collection(db, 'gift_logs'), {
+    userinfo,
+    reward,
+    date: new Date(),
+  });
+  return docRef.id;
+}
+
+export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog }

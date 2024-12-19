@@ -1,5 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Patrick+Hand&display=swap');
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   overflow: hidden;
+  font-family: "League Spartan", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  line-height: 1.5em;
+  font-size: 14px;
 }
 
 #root {
@@ -33,10 +45,10 @@ body {
 
 
 .update-user-info__form {
-  padding: 1em 2em; 
-  background: white;
-  border-radius: 4px;
-  color: black;
+  // padding: 1em 2em; 
+  // background: white;
+  // border-radius: 4px;
+  // color: black;
   text-align: left;
   font-size: 14px;
   box-sizing: border-box;
@@ -85,6 +97,44 @@ body {
   color: white;
   padding: 1em;
   display: inline-block;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 4px;
+  padding: 1em;
+  // background: url('./assets/background-button.png') no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.background-layer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 1;
+  background: url('./assets//background-lucky-wheel.jpg') no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.__container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  padding: 2em;
+  box-sizing: border-box;
+
+  .__container__inner {
+    padding: 2em;
+    border-radius: 16px;
+    background: white;
+    box-sizing: border-box;
+  }
+}
+
+.h-title {
+  margin: 0 0 6px;
 }

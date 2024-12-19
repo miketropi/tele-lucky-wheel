@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.scss'
 import { Link } from "react-router-dom";
 import { useLuckyWheelContext } from './context/AppContext';
-import LuckyWheel from './components/LuckyWheel';
+import LuckyWheelComp from './components/LuckyWheelComp';
 import UserInfo from './components/UserInfo';
 import randomColor from 'randomcolor';
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ function App() {
   const { onUpdateUserGift } = fn;
 
   const wheel = (
-    gifts.length > 0 && <LuckyWheel gifts={ gifts.map(g => {
+    gifts.length > 0 && <LuckyWheelComp gifts={ gifts.map(g => {
       return { option: g.name, style: { backgroundColor: randomColor({luminosity: 'light'}) } }
     } ) } onHandleSpinFinish={ res => {
       // console.log(res); 

@@ -6,6 +6,10 @@ import { LuckyWheelContextPrivider } from './context/AppContext.jsx';
 import App from './App.jsx';
 import UpdateContact from './pages/UpdateContact.jsx';
 import AdminView from './pages/AdminView.jsx';
+import InitForm from './pages/InitForm.jsx';
+import Welcome from './pages/Welcome.jsx';
+import LuckyWheel from './pages/LuckyWheel.jsx';
+import Thankyou from './pages/Thankyou.jsx';
 import { AdminViewContextProvider } from './context/AdminViewContext.jsx';
 import WebApp from '@twa-dev/sdk';
 
@@ -16,8 +20,12 @@ createRoot(document.getElementById('root')).render(
     <StrictMode>
       <BrowserRouter>
         <Routes>
-          <Route index element={<App />} />
-          <Route path="/update-contact" element={<UpdateContact />} />
+          <Route index element={<Welcome />} />
+          <Route path="/update-userinfo" element={<InitForm />} />
+          <Route path="/update-userinfo" element={<InitForm />} />
+          <Route path="/luckywheel" element={<LuckyWheel />} />
+          <Route path="/thankyou" element={<Thankyou />} />
+          {/* <Route path="/update-contact" element={<UpdateContact />} /> */}
           <Route path="/admin-view" element={<AdminViewContextProvider><AdminView /></AdminViewContextProvider>} />
         </Routes>
       </BrowserRouter>

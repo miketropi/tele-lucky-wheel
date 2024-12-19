@@ -42,7 +42,8 @@ export default function AdminView() {
   const { onTestReward } = fn;
   return <div className="admin-view">
     <div className="container">
-      <GiftsTable gifts={ gifts } /> <button onClick={ onTestReward }>Test Reward</button>
+      <GiftsTable gifts={ gifts } /> 
+      <button onClick={ onTestReward }>Test Reward</button>
       {/* <div>{ JSON.stringify(users) }</div> */}
       {/* <div>{ JSON.stringify(gifts) }</div> */}
       

@@ -20,16 +20,14 @@ export default function UpdateUserInfo() {
     setUser(_user);
   }
 
-  return <div className="update-user-info">
+  return <div className="__">
     {/* { JSON.stringify(user) }  */}
     <form className="form update-user-info__form" onSubmit={ async e => {
       e.preventDefault();
       // alert(JSON.stringify(user.update_info))
       await onUpdateUserInfo(user.update_info); 
-      navigate('/')
+      navigate('/luckywheel')
     } }>
-      <p>Cảm ơn bạn đã tham gia chương trình, phần quà của bạn là <strong style={{ background: 'black', color: 'white' }}>{ user.gift }</strong></p>
-      <p>Vui lòng cập nhật thông tin liên hệ</p> 
       <p>
         <label>Họ và tên</label>
         <input 
@@ -52,8 +50,8 @@ export default function UpdateUserInfo() {
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'phone') }  } />
       </p>
       <p className="form-actions">
-        <Link to="/">Trở về</Link> 
-        <button type="submit">Cập nhật</button>
+        {/* <Link to="/">Trở về</Link>  */}
+        <button className="button" type="submit">👉 Cập nhật</button>
       </p>
     </form>
   </div>
