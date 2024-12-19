@@ -26,7 +26,8 @@ export default function UpdateUserInfo() {
       e.preventDefault();
       // alert(JSON.stringify(user.update_info))
       await onUpdateUserInfo(user.update_info); 
-      navigate('/luckywheel')
+      let directUrl = user.gift ? '/thankyou' : '/luckywheel';
+      navigate(directUrl)
     } }>
       <p>
         <label>Họ và tên</label>

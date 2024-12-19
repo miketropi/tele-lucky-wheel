@@ -36,6 +36,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
         setUser(__u);
       }
       setUser(__u);
+      setReward(__u?.gift)
     }
     __query();
     onGetGifts();
