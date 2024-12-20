@@ -4,14 +4,14 @@ import { Wheel } from 'react-custom-roulette';
 
 export default function LuckyWheelComp({ onHandleSpinFinish }) { 
   const { gifts, giftColors, fn } = useLuckyWheelContext();
-  const { onSpin } = fn;
+  const { onSpin, onSpin2 } = fn;
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [delay, setDelay] = useState();
   const [isStart, setIsStart] = useState(false);
 
   useEffect(() => {
-    setDelay(randomInteger(3, 20))
+    setDelay(randomInteger(3, 8))
   }, [])
 
   useEffect(() => {
@@ -34,9 +34,22 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
   useEffect(() => {
     if(delay != 0) return;
     const __run = async () => {
-      const rewardIndex = await onSpin(gifts);
-      setPrizeNumber(rewardIndex);
-      setMustSpin(true);
+      // const rewardIndex = await onSpin(gifts);
+      await onSpin2((res) => {
+        console.log('onSpin2', res);
+        if(res?.rewardSelected) {
+          let { __id, name } = res.rewardSelected;
+          let rewardIndex = gifts.findIndex(g => g.__id == __id);
+
+          setPrizeNumber(rewardIndex);
+          setMustSpin(true);
+        } else {
+          // alert(`INTERNAL ERROR: Please relead `)
+          alert(JSON.stringify(res))
+        }
+      });
+      // setPrizeNumber(rewardIndex);
+      // setMustSpin(true);
     }
     __run(); 
   }, [delay])
@@ -52,11 +65,11 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
   }
 
   return <>
-    {
+    {/* {
       gifts.filter(g => (g.qty > 0)).map(g => {
         return <span key={ g?.__id }>{ g.name }: { g.qty }: { g.probability } |</span>
       })
-    }
+    } */}
     <Wheel
       mustStartSpinning={mustSpin}
       prizeNumber={prizeNumber}

@@ -59,6 +59,16 @@ const listennerCollection = (collecton, callback) => {
   return unsubscribe;
 }
 
+const listennerDoc = (collection, doc_id, callback) => {
+  const unsub = onSnapshot(doc(db, collection, doc_id), (doc) => {
+    let d = doc.data();
+    d.__id = doc.id
+    callback(d);
+  });
+
+  return unsub;
+}
+
 const addLog = async (userinfo, reward) => {
   const docRef = await addDoc(collection(db, 'gift_logs'), {
     userinfo,
@@ -68,4 +78,14 @@ const addLog = async (userinfo, reward) => {
   return docRef.id;
 }
 
-export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog }
+const getRequest = async (request_id) => {
+  const docRef = doc(db, "request_rewards", request_id);
+  const docSnap = await getDoc(docRef);
+  
+  return {
+    __id: docSnap.id,
+    ...docSnap.data()
+  }
+}
+
+export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog, getRequest, listennerDoc }

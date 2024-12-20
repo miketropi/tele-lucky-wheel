@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { findUserByTeleID, addUser, getGifts, updateUser, listennerCollection, updateGift, addLog } from '../services/api';
+import { findUserByTeleID, addUser, getGifts, updateUser, listennerCollection, updateGift, addLog, getRequest, listennerDoc } from '../services/api';
 import randomColor from 'randomcolor';
 
 const LuckyWheelContext = createContext(null);
@@ -103,6 +103,28 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
     return gifts.findIndex(g => g.__id == reward.__id);
   }, [gifts])
 
+  const onSpin2 = async (cb) => {
+    const rid = await fetch(`https://widgets-n2dvrqiy7q-uc.a.run.app/get-reward-v2`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userid: user.__id }),
+    }).then(r => {
+      return r.json();
+    }).then(async r => {
+      return r.request.requestID;
+    })
+    console.log(rid); 
+
+    const usub = listennerDoc('request_rewards', rid, doc => {
+      // console.log(doc);
+      if(doc.status == "in-progress") return;
+      cb(doc.response);
+      usub();
+    })
+  } 
+
   const value = {
     version: '1.0.0',
     teleUser: WebApp.initDataUnsafe,
@@ -114,6 +136,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
       onUpdateUserGift,
       onUpdateUserInfo,
       onSpin,
+      onSpin2,
     }
   }
 
