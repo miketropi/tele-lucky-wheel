@@ -14,7 +14,7 @@ const GiftsTable = ({ gifts }) => {
           <th>#</th>
           <th>Name</th>
           <th>Qty</th>
-          <th>Probability</th>
+          <th>Xác suất (%)</th>
         </tr>
       </thead>
       <tbody>
@@ -87,7 +87,7 @@ export default function AdminView() {
       <div className="cont-2cols">
         <div>
           <GiftsTable gifts={ gifts } /> 
-          <button className="button" onClick={ onTestReward }>Test Reward</button>
+          {/* <button className="button" onClick={ onTestReward }>Test Reward</button> */}
         </div>
         <div>
           {
