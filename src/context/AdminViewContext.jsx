@@ -1,15 +1,21 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift } from '../services/api';
+import { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, getLogs } from '../services/api';
 
 const AdminViewContext = createContext(null);
 
 const AdminViewContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [gifts, setGifts] = useState([]);
+  const [logs, setLogs] = useState([]);
 
   const onGetUsers_fn = async () => {
     const res = await getUsers();
     setUsers(res);
+  }
+
+  const onGetLogs_fn = async () => {
+    const res = await getLogs();
+    setLogs(res);
   }
 
   const addTotalProbability = (rewards) => {
@@ -29,17 +35,26 @@ const AdminViewContextProvider = ({ children }) => {
     const onLoadInit = async () => {
       onGetUsers_fn();
       onGetGifts_fn();
+      onGetLogs_fn();
     }
 
     onLoadInit();
 
-    const l = listennerCollection('gifts', (res) => {
-      console.log(res);
+    const g = listennerCollection('gifts', (res) => {
       setGifts(addTotalProbability(res))
-      // getGifts(res);
     });
 
+    const u = listennerCollection('a1aluckywheel', (res) => {
+      setUsers(res);
+    })
+
+    const l = listennerCollection('gift_logs', (res) => {
+      setLogs(res);
+    })
+
     return () => {
+      g();
+      u();
       l();
     }
   }, [])
@@ -57,12 +72,18 @@ const AdminViewContextProvider = ({ children }) => {
     }
   }
 
-  const onTestReward = () => {
-    let gift = onPickReward();
-    console.log(gift.name);
-    updateGift(gift.__id, {
-      qty: gift.qty - 1,
-    })
+  const onTestReward = async () => {
+    const result = await fetch(`https://widgets-n2dvrqiy7q-uc.a.run.app/get-reward`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userid: 'BIZwjWL3jhJdwAuytIlF' }),
+    }).then(async res => {
+      return await res.json();
+    });
+
+    console.log(result);
   }
 
   const onUpdateQtyGift = (id, qty) => {
@@ -74,6 +95,7 @@ const AdminViewContextProvider = ({ children }) => {
   const value = {
     users, setUsers,
     gifts, setGifts,
+    logs, setLogs,
     fn: {
       onTestReward,
       onUpdateQtyGift

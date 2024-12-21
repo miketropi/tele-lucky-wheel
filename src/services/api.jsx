@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, doc, setDoc, query, getDocs, getDoc, addDoc, where, limit, onSnapshot } from "firebase/firestore"; 
+import { collection, doc, setDoc, query, orderBy, getDocs, getDoc, addDoc, where, limit, onSnapshot } from "firebase/firestore"; 
 
 const getUsers = async () => {
   const q = await query(collection(db, 'a1aluckywheel'));
@@ -68,4 +68,14 @@ const addLog = async (userinfo, reward) => {
   return docRef.id;
 }
 
-export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog }
+const getLogs = async () => {
+  const q = await query(collection(db, 'gift_logs'), orderBy('date', 'desc'));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map(doc => {
+    let d = doc.data();
+    d.__id = doc.id
+    return d;
+  });
+}
+
+export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog, getLogs }

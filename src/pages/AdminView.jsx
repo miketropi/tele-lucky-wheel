@@ -5,6 +5,7 @@ import '../AdminView.scss';
 const GiftsTable = ({ gifts }) => {
   const { fn } = useAdminViewContext();
   const { onUpdateQtyGift } = fn;
+  
   return <>
     <h4>Gifts</h4>
     <table className="table">
@@ -37,16 +38,66 @@ const GiftsTable = ({ gifts }) => {
   </>
 }
 
+const LogsTables = ({ data }) => {
+
+  const _date = (time) => {
+    const fireBaseTime = new Date(
+      time.seconds * 1000 + time.nanoseconds / 1000000,
+    );
+    const date = fireBaseTime.toDateString();
+    const atTime = fireBaseTime.toLocaleTimeString();
+
+    return `${ date } ${ atTime }`;
+  }
+
+  return <>
+    <h4>Logs Rewards</h4>
+    <table className="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Reward</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          [...data].map((l, index) => {
+            console.log(l)
+            const { userid, reward, date, __user } = l;
+            return (<tr key={ l.__id }>
+              <td></td>
+              <td><strong>{ __user?.tele_userinfo_full?.username }</strong> (#{ userid })</td>
+              <td>{ reward }</td>
+              <td>{ _date(date) }</td>
+            </tr>)
+          })
+        }
+      </tbody>
+    </table>
+  </>
+}
+
 export default function AdminView() {
-  const { users, gifts, fn } = useAdminViewContext();
+  const { users, gifts, logs, fn } = useAdminViewContext();
   const { onTestReward } = fn;
   return <div className="admin-view">
     <div className="container">
-      <GiftsTable gifts={ gifts } /> 
-      <button onClick={ onTestReward }>Test Reward</button>
-      {/* <div>{ JSON.stringify(users) }</div> */}
-      {/* <div>{ JSON.stringify(gifts) }</div> */}
-      
+      <div className="cont-2cols">
+        <div>
+          <GiftsTable gifts={ gifts } /> 
+          <button className="button" onClick={ onTestReward }>Test Reward</button>
+        </div>
+        <div>
+          {
+            logs.length > 0 && <LogsTables data={ logs.map(l => {
+              l.__user = users.find(__u => __u.__id == l.userid)
+              return l;
+            }) } />
+          }
+        </div>
+      </div>
     </div>
   </div>
 }

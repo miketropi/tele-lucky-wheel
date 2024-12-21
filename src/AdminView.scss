@@ -6,6 +6,7 @@
   background: white;
   color: black;
   margin-bottom: 1em;
+  width: 100%;
   
   thead {
     background-color: #eee;
@@ -29,4 +30,21 @@
     width: 980px;
     margin: 5em auto;
   }
+}
+
+.button {
+  background: black;
+  color: white;
+  padding: 1em;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 1em;
+  background-size: 100% 100%;
+}
+
+.cont-2cols {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
 }
