@@ -45,6 +45,16 @@
 
 .cont-2cols {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+.__reward-airpods-4 {
+  color: white;
+  background-image: linear-gradient(to right, #ff05aa, #d167ec, #8995ff, #2cb3ff, #00c8ff);
+}
+
+.__reward-500-000-vnd	{
+  background-color: black;
+  color: white;
 }

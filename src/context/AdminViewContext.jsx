@@ -7,6 +7,7 @@ const AdminViewContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [gifts, setGifts] = useState([]);
   const [logs, setLogs] = useState([]);
+  const [editSlot, setEditSlot] = useState(false);
 
   const onGetUsers_fn = async () => {
     const res = await getUsers();
@@ -96,6 +97,7 @@ const AdminViewContextProvider = ({ children }) => {
     users, setUsers,
     gifts, setGifts,
     logs, setLogs,
+    editSlot, setEditSlot,
     fn: {
       onTestReward,
       onUpdateQtyGift

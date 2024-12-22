@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLuckyWheelContext } from '../context/AppContext';
 import { Wheel } from 'react-custom-roulette';
+import { useNavigate } from "react-router-dom";
 
-export default function LuckyWheelComp({ onHandleSpinFinish }) { 
-  const { gifts, giftColors, fn } = useLuckyWheelContext();
+
+export default function LuckyWheelComp({ onHandleSpinFinish }) {
+  const nav = useNavigate(); 
+  const { gifts, giftColors, fn, error, setError } = useLuckyWheelContext();
   const { onSpin, onSpin2 } = fn;
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -36,7 +39,7 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
     const __run = async () => {
       // const rewardIndex = await onSpin(gifts);
       await onSpin2((res) => {
-        console.log('onSpin2', res);
+        // console.log('onSpin2', res);
         if(res?.rewardSelected) {
           let { __id, name } = res.rewardSelected;
           let rewardIndex = gifts.findIndex(g => g.__id == __id);
@@ -45,7 +48,10 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
           setMustSpin(true);
         } else {
           // alert(`INTERNAL ERROR: Please relead `)
-          alert(JSON.stringify(res))
+          // alert(JSON.stringify(res))
+          // error
+          setError(res); 
+          nav('/error');
         }
       });
       // setPrizeNumber(rewardIndex);
@@ -87,7 +93,14 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
     <div style={{ textAlign: 'center' }}> 
       {
         isStart 
-          ? <p>Vòng quay sẽ bắt đầu trong { delay }s nữa, vui lòng chờ!</p>
+          ? (() => {
+            if(delay <= 0) {
+              return <p>Đang trong hàng đợi, vui lòng chờ giây lát...!</p> 
+            } else {
+              return <p>Vòng quay sẽ bắt đầu trong { delay }s nữa, vui lòng chờ!</p>
+            }
+            
+          })()
           : <button className="button" onClick={handleSpinClick}>Bấm để quay thưởng (1 lượt duy nhất) 🎉</button>
       }
        

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function UpdateUserInfo() {
   const navigate = useNavigate();
 
-  const { user, setUser, fn } = useLuckyWheelContext();
+  const { user, setUser, fn, gifts } = useLuckyWheelContext();
   const { onUpdateUserInfo } = fn;
 
   const onUpdateUserInfo_fn = (value, name) => {
@@ -26,7 +26,8 @@ export default function UpdateUserInfo() {
       e.preventDefault();
       // alert(JSON.stringify(user.update_info))
       await onUpdateUserInfo(user.update_info); 
-      let directUrl = user.gift ? '/thankyou' : '/luckywheel';
+      let giftsAvailable = gifts.filter(g => g.qty > 0).length;
+      let directUrl = user.gift ? '/thankyou' : (giftsAvailable == 0 ? '/endgame' : '/luckywheel');
       navigate(directUrl)
     } }>
       <p>
@@ -34,6 +35,7 @@ export default function UpdateUserInfo() {
         <input 
           type="text" 
           value={ user?.update_info?.full_name } 
+          required 
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'full_name') }  } />
       </p>
       <p>
@@ -41,6 +43,7 @@ export default function UpdateUserInfo() {
         <input 
           type="email" 
           value={ user?.update_info?.email } 
+          required 
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'email') }  } />
       </p>
       <p>
@@ -48,6 +51,7 @@ export default function UpdateUserInfo() {
         <input 
           type="text" 
           value={ user?.update_info?.phone } 
+          required 
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'phone') }  } />
       </p>
       <p className="form-actions">

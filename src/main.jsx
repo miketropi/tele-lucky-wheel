@@ -10,6 +10,8 @@ import InitForm from './pages/InitForm.jsx';
 import Welcome from './pages/Welcome.jsx';
 import LuckyWheel from './pages/LuckyWheel.jsx';
 import Thankyou from './pages/Thankyou.jsx';
+import EndGame from './pages/EndGame.jsx';
+import ErrorScreen from './pages/ErrorScreen.jsx';
 import { AdminViewContextProvider } from './context/AdminViewContext.jsx';
 import WebApp from '@twa-dev/sdk';
 
@@ -25,6 +27,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/update-userinfo" element={<InitForm />} />
           <Route path="/luckywheel" element={<LuckyWheel />} />
           <Route path="/thankyou" element={<Thankyou />} />
+          <Route path="/endgame" element={<EndGame />} />
+          <Route path="/error" element={<ErrorScreen />} />
           {/* <Route path="/update-contact" element={<UpdateContact />} /> */}
           <Route path="/admin-view" element={<AdminViewContextProvider><AdminView /></AdminViewContextProvider>} />
         </Routes>

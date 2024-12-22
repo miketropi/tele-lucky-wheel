@@ -3,17 +3,21 @@ import { useAdminViewContext } from "../context/AdminViewContext";
 import '../AdminView.scss';
 
 const GiftsTable = ({ gifts }) => {
-  const { fn } = useAdminViewContext();
+  const { editSlot, setEditSlot, fn } = useAdminViewContext();
   const { onUpdateQtyGift } = fn;
   
   return <>
-    <h4>Gifts</h4>
+    <h4>Rewards</h4>
     <table className="table">
       <thead>
         <tr>
-          <th>#</th>
+          <th>
+            <span onDoubleClick={ e => {
+            setEditSlot(true)
+          } }>#</span>
+          </th>
           <th>Name</th>
-          <th>Qty</th>
+          <th>Slot</th>
           <th>Xác suất (%)</th>
         </tr>
       </thead>
@@ -25,9 +29,18 @@ const GiftsTable = ({ gifts }) => {
               <td>{ g?.name }</td>
               <td>
                 {/* { g?.qty }  */}
-                <input style={{width: `50px`}} type="number" value={ g?.qty } onChange={ e => {
-                onUpdateQtyGift(g.__id, e.target.value)
-              } } />
+                {
+                  (() => {
+                    if(editSlot) {
+                      return <input style={{width: `50px`}} type="number" value={ g?.qty } onChange={ e => {
+                        onUpdateQtyGift(g.__id, e.target.value)
+                      } } />
+                    } else {
+                      return g?.qty
+                    }
+                  })()
+                }
+                
               </td>
               <td>{ g?.probability }%</td>
             </tr>
@@ -79,6 +92,33 @@ const LogsTables = ({ data }) => {
   </>
 }
 
+const UsersTables = ({ users }) => {
+  return <>
+    <h4>Người tham gia</h4>
+    <table className="table">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td>User</td> 
+          <td>Reward</td>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          users.length > 0 && users.map((user, __u_index) => {
+            let fullname = `${ user?.tele_userinfo_full?.first_name } ${ user?.tele_userinfo_full?.last_name }`;
+            return <tr key={ user?.__id } className={ user?.gift ? `__reward-${ user?.gift.toLowerCase().replace('.', '-').replace(' ', '-') }` : '' }>
+              <td>{ __u_index + 1 }</td>
+              <td><strong>{ fullname }<br/></strong> (teleid: { user?.tele_userinfo_full?.id })</td>
+              <td>{ user?.gift }</td>
+            </tr>
+          })
+        }
+      </tbody>
+    </table>
+  </>
+}
+
 export default function AdminView() {
   const { users, gifts, logs, fn } = useAdminViewContext();
   const { onTestReward } = fn;
@@ -88,14 +128,16 @@ export default function AdminView() {
         <div>
           <GiftsTable gifts={ gifts } /> 
           {/* <button className="button" onClick={ onTestReward }>Test Reward</button> */}
-        </div>
-        <div>
+          {/* <hr />
           {
             logs.length > 0 && <LogsTables data={ logs.map(l => {
               l.__user = users.find(__u => __u.__id == l.userid)
               return l;
             }) } />
-          }
+          } */}
+        </div>
+        <div>
+          <UsersTables users={ users } />
         </div>
       </div>
     </div>

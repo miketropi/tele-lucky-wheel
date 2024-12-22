@@ -9,6 +9,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
   const [gifts, setGifts] = useState([]);
   const [giftColors, setGiftColors] = useState([]);
   const [reward, setReward] = useState(null);
+  const [error, setError] = useState(null);
 
   const addTotalProbability = (rewards) => {
     const totalProbability = rewards.reduce((sum, reward) => sum + reward.qty, 0);
@@ -42,7 +43,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
     onGetGifts();
 
     const l = listennerCollection('gifts', (res) => {
-      console.log(res);
+      // console.log(res);
       setGifts(addTotalProbability(res))
       // getGifts(res);
     });
@@ -132,6 +133,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
     gifts, setGifts,
     giftColors,
     reward, setReward,
+    error, setError,
     fn: {
       onUpdateUserGift,
       onUpdateUserInfo,
