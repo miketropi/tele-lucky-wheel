@@ -1,5 +1,3 @@
-
-
 .table {
   border-collapse: collapse;
   border: solid 1px #eee;
@@ -57,4 +55,9 @@
 .__reward-500-000-vnd	{
   background-color: black;
   color: white;
+}
+
+.r-col {
+  max-height: 80vh;
+  overflow: auto;
 }

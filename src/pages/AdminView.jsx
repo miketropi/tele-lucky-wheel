@@ -136,7 +136,7 @@ export default function AdminView() {
             }) } />
           } */}
         </div>
-        <div>
+        <div className="r-col">
           <UsersTables users={ users } />
         </div>
       </div>
