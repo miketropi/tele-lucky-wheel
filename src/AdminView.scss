@@ -26,7 +26,10 @@
 
   .container {
     width: 980px;
-    margin: 5em auto;
+    max-width: 100%;
+    margin: 1em auto;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 }
 
@@ -45,6 +48,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+
+  @media(max-width: 550px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .__reward-airpods-4 {
@@ -58,6 +65,11 @@
 }
 
 .r-col {
-  max-height: 80vh;
-  overflow: auto;
+  // max-height: 80vh;
+  // overflow: auto;
+}
+
+.__sticky {
+  position: sticky;
+  top: 30px;
 }

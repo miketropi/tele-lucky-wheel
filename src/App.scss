@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-  overflow: hidden;
+  // overflow: hidden;
   font-family: "League Spartan", serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -138,4 +138,8 @@ body {
 
 .h-title {
   margin: 0 0 6px;
+}
+
+.luckywheel-container {
+  overflow: hidden;
 }

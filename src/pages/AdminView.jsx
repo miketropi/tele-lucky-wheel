@@ -94,7 +94,7 @@ const LogsTables = ({ data }) => {
 
 const UsersTables = ({ users }) => {
   return <>
-    <h4>Người tham gia</h4>
+    <h4>Người tham gia ({ users.length })</h4>
     <table className="table">
       <thead>
         <tr>
@@ -125,8 +125,8 @@ export default function AdminView() {
   return <div className="admin-view">
     <div className="container">
       <div className="cont-2cols">
-        <div>
-          <GiftsTable gifts={ gifts } /> 
+        <div className="l-col">
+          <div className="__sticky"><GiftsTable gifts={ gifts } /></div>
           {/* <button className="button" onClick={ onTestReward }>Test Reward</button> */}
           {/* <hr />
           {
