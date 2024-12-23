@@ -31,7 +31,7 @@ export default function UpdateUserInfo() {
       navigate(directUrl)
     } }>
       <p>
-        <label>Họ và tên</label>
+        <label>Họ và tên*</label>
         <input 
           type="text" 
           value={ user?.update_info?.full_name } 
@@ -39,7 +39,7 @@ export default function UpdateUserInfo() {
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'full_name') }  } />
       </p>
       <p>
-        <label>Địa chỉ Email</label>
+        <label>Địa chỉ Email*</label>
         <input 
           type="email" 
           value={ user?.update_info?.email } 
@@ -47,12 +47,20 @@ export default function UpdateUserInfo() {
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'email') }  } />
       </p>
       <p>
-        <label>Phone number</label>
+        <label>Phone number*</label>
         <input 
           type="text" 
           value={ user?.update_info?.phone } 
           required 
           onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'phone') }  } />
+      </p>
+      <p>
+        <label>Discord ID*</label>
+        <input 
+          type="text" 
+          value={ user?.update_info?.discord_id } 
+          required 
+          onChange={ e => { onUpdateUserInfo_fn(e.target.value, 'discord_id') }  } />
       </p>
       <p className="form-actions">
         {/* <Link to="/">Trở về</Link>  */}

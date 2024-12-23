@@ -100,6 +100,7 @@ const UsersTables = ({ users }) => {
         <tr>
           <td>#</td>
           <td>User</td> 
+          <td>Discord ID</td> 
           <td>Reward</td>
         </tr>
       </thead>
@@ -110,6 +111,7 @@ const UsersTables = ({ users }) => {
             return <tr key={ user?.__id } className={ user?.gift ? `__reward-${ user?.gift.toLowerCase().replace('$', 'dola').replace('.', '-').replace(' ', '-') }` : '' }>
               <td>{ __u_index + 1 }</td>
               <td><strong>{ fullname }<br/></strong> (teleid: { user?.tele_userinfo_full?.id })</td>
+              <td>{ user?.update_info?.discord_id }</td> 
               <td>{ user?.gift }</td>
             </tr>
           })
