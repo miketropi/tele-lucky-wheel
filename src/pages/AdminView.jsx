@@ -107,7 +107,7 @@ const UsersTables = ({ users }) => {
         {
           users.length > 0 && users.map((user, __u_index) => {
             let fullname = `${ user?.tele_userinfo_full?.first_name } ${ user?.tele_userinfo_full?.last_name }`;
-            return <tr key={ user?.__id } className={ user?.gift ? `__reward-${ user?.gift.toLowerCase().replace('.', '-').replace(' ', '-') }` : '' }>
+            return <tr key={ user?.__id } className={ user?.gift ? `__reward-${ user?.gift.toLowerCase().replace('$', 'dola').replace('.', '-').replace(' ', '-') }` : '' }>
               <td>{ __u_index + 1 }</td>
               <td><strong>{ fullname }<br/></strong> (teleid: { user?.tele_userinfo_full?.id })</td>
               <td>{ user?.gift }</td>
