@@ -111,8 +111,8 @@ body {
   min-width: 100%;
   min-height: 100%;
   z-index: 1;
-  background: url('./assets//background-lucky-wheel.jpg') no-repeat center center;
-  background-size: 100% 100%;
+  background: url('./assets//background-lucky-wheel-2.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .__container {
@@ -131,7 +131,7 @@ body {
   .__container__inner {
     padding: 2em;
     border-radius: 16px;
-    background: white;
+    background: rgba(255,255,255,.85);
     box-sizing: border-box;
   }
 }
