@@ -95,9 +95,9 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
         isStart 
           ? (() => {
             if(delay <= 0) {
-              return <p>Đang trong hàng đợi, sẽ bắt đầu trong giây lát...!</p> 
+              return <p className="__in-spin-message">Đang trong hàng đợi, sẽ bắt đầu trong giây lát...!</p> 
             } else {
-              return <p>Vòng quay sẽ bắt đầu trong { delay }s nữa, vui lòng chờ!</p>
+              return <p className="__in-spin-message">Vòng quay sẽ bắt đầu trong { delay }s nữa, vui lòng chờ!</p>
             }
             
           })()

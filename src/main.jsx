@@ -12,6 +12,7 @@ import LuckyWheel from './pages/LuckyWheel.jsx';
 import Thankyou from './pages/Thankyou.jsx';
 import EndGame from './pages/EndGame.jsx';
 import ErrorScreen from './pages/ErrorScreen.jsx';
+import UserInfo2 from './pages/UserInfo2.jsx';
 import { AdminViewContextProvider } from './context/AdminViewContext.jsx';
 import WebApp from '@twa-dev/sdk';
 
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')).render(
           <Route index element={<Welcome />} />
           <Route path="/update-userinfo" element={<InitForm />} />
           <Route path="/update-userinfo" element={<InitForm />} />
+          <Route path="/updateinfo2" element={<UserInfo2 />} />
           <Route path="/luckywheel" element={<LuckyWheel />} />
           <Route path="/thankyou" element={<Thankyou />} />
           <Route path="/endgame" element={<EndGame />} />

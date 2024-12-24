@@ -53,6 +53,32 @@ body {
   font-size: 14px;
   box-sizing: border-box;
 
+  .__radio-field-wrap {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    line-height: normal;
+    margin-bottom: .5em;
+  }
+
+  .__field-2cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+    margin: 1em 0;
+  }
+
+  .__field-group {
+
+    > label {
+      font-weight: bold;
+    }
+  }
+
+  input[type=radio] {
+    margin: 0 .5em 0 0;
+  }
+
   input[type=text],
   input[type=email],
   input[type=number] {
@@ -142,4 +168,9 @@ body {
 
 .luckywheel-container {
   overflow: hidden;
+}
+
+.__in-spin-message {
+  background: black;
+  color: white;
 }
