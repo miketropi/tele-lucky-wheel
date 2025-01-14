@@ -148,7 +148,7 @@ export default function AdminView() {
           } */}
         </div>
         <div className="r-col">
-          <UsersTables users={ users } />
+          <UsersTables users={ users.filter(u => u.gift) } />
         </div>
       </div>
     </div>
