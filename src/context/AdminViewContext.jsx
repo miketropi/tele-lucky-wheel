@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, getLogs } from '../services/api';
+import { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, getLogs, addReward, deleteDocument, getAppSettings, updateSettings, listennerDocument, clearAllDocument } from '../services/api';
 
 const AdminViewContext = createContext(null);
 
@@ -7,7 +7,14 @@ const AdminViewContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [gifts, setGifts] = useState([]);
   const [logs, setLogs] = useState([]);
+  const [appSettings, setAppSettings] = useState({});
   const [editSlot, setEditSlot] = useState(false);
+
+  const onGetSettings_fn = async () => {
+    let res = await getAppSettings('global_settings');
+    setAppSettings(res);
+    // console.log('onGetSettings_fn', res);
+  }
 
   const onGetUsers_fn = async () => {
     const res = await getUsers();
@@ -37,6 +44,7 @@ const AdminViewContextProvider = ({ children }) => {
       onGetUsers_fn();
       onGetGifts_fn();
       onGetLogs_fn();
+      onGetSettings_fn();
     }
 
     onLoadInit();
@@ -53,10 +61,15 @@ const AdminViewContextProvider = ({ children }) => {
       setLogs(res);
     })
 
+    const s = listennerDocument('settings', 'global_settings', (res) => {
+      setAppSettings(res);
+    })
+
     return () => {
       g();
       u();
       l();
+      s();
     }
   }, [])
   
@@ -93,14 +106,45 @@ const AdminViewContextProvider = ({ children }) => {
     })
   }
 
+  const onUpdateNameGift = (id, name) => {
+    updateGift(id, {
+      name: name,
+    })
+  }
+
+  const onAddReward = async () => {
+    let rewardName = prompt("Please enter name reward:", "");
+    if (rewardName == null || rewardName == "") return;
+
+    return await addReward(rewardName, 0);
+  }
+
+  const onDeleteRewardItem = async (id) => {
+    await deleteDocument('gifts', id)
+  }
+
+  const onUpdateSetting = async (id, data) => {
+    updateSettings(id, data)
+  }
+
+  const onClearAllUser = () => {
+    clearAllDocument('a1aluckywheel');
+  }
+
   const value = {
     users, setUsers,
     gifts, setGifts,
     logs, setLogs,
     editSlot, setEditSlot,
+    appSettings, setAppSettings,
     fn: {
       onTestReward,
-      onUpdateQtyGift
+      onUpdateQtyGift,
+      onAddReward,
+      onUpdateNameGift,
+      onDeleteRewardItem,
+      onUpdateSetting,
+      onClearAllUser,
     },
   }
 

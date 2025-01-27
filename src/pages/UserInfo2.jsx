@@ -1,8 +1,10 @@
 import UpdateUserInfo2 from "../components/UpdateUserInfo2"
+import { useLuckyWheelContext } from "../context/AppContext"
 
 export default function UserInfo2() {
+  const { appSettings } = useLuckyWheelContext();
   return <>
-    <div className="background-layer"></div> 
+    <div className="background-layer" style={{ background: `url(${ appSettings?.game_bg }) no-repeat center center` }}></div> 
     <div className="userinfo-2-container __container">
       <div className="__container__inner">
         <h4 className="h-title">Cập nhật phương thức nhận quà</h4>

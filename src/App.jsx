@@ -12,7 +12,7 @@ import WebApp from '@twa-dev/sdk'
 
 function App() {
   const navigate = useNavigate();
-  const { user, gifts, fn } = useLuckyWheelContext(); 
+  const { appSettings, user, gifts, fn } = useLuckyWheelContext(); 
   const { onUpdateUserGift } = fn;
 
   const wheel = (

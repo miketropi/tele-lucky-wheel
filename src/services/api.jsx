@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, doc, setDoc, query, orderBy, getDocs, getDoc, addDoc, where, limit, onSnapshot } from "firebase/firestore"; 
+import { collection, doc, setDoc, query, orderBy, getDocs, getDoc, addDoc, where, limit, onSnapshot, deleteDoc } from "firebase/firestore"; 
 
 const getUsers = async () => {
   const q = await query(collection(db, 'a1aluckywheel'));
@@ -98,4 +98,42 @@ const getRequest = async (request_id) => {
   }
 }
 
-export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog, getRequest, listennerDoc, getLogs }
+const addReward = async (name, qty) => {
+  const docRef = await addDoc(collection(db, 'gifts'), {
+    name,
+    qty,
+  });
+  return docRef.id;
+}
+
+const deleteDocument = async (collection, id) => {
+  await deleteDoc(doc(db, collection, id))
+}
+
+const getAppSettings = async (id) => {
+  const docSnap = await getDoc(doc(db, "settings", id));
+  return docSnap.data(); 
+}
+
+const updateSettings = async (id, data) => {
+  const docRef = collection(db, 'settings');
+  await setDoc(doc(docRef, id), data, { merge: true });
+}
+
+const listennerDocument = (collection, docid, callback) => {
+  return onSnapshot(doc(db, collection, docid), (doc) => {
+    // console.log("Current data: ", doc.data());
+    callback(doc.data());
+  });
+}
+
+const clearAllDocument = async (__collection) => {
+  const q = await query(collection(db, __collection));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.docs.map(document => {  
+    // doc.delete();
+    deleteDoc(doc(db, __collection, document.id))
+  });
+}
+
+export { findUserByTeleID, addUser, getGifts, updateUser, getUsers, listennerCollection, updateGift, addLog, getRequest, listennerDoc, getLogs, addReward, deleteDocument, getAppSettings, updateSettings, listennerDocument, clearAllDocument }

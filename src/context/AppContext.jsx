@@ -1,15 +1,25 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { findUserByTeleID, addUser, getGifts, updateUser, listennerCollection, updateGift, addLog, getRequest, listennerDoc } from '../services/api';
+import { findUserByTeleID, addUser, getGifts, updateUser, listennerCollection, updateGift, addLog, getRequest, listennerDoc, getAppSettings, listennerDocument } from '../services/api';
 import randomColor from 'randomcolor';
+import { useNavigate } from "react-router-dom";
 
 const LuckyWheelContext = createContext(null);
 
 const LuckyWheelContextPrivider = ({ children, WebApp }) => {
+
+  const [appSettings, setAppSettings] = useState({});
   const [user, setUser] = useState(null); 
   const [gifts, setGifts] = useState([]);
   const [giftColors, setGiftColors] = useState([]);
   const [reward, setReward] = useState(null);
   const [error, setError] = useState(null);
+
+  const onGetSettings_fn = async () => {
+    let res = await getAppSettings('global_settings');
+    // console.log(res);
+    setAppSettings(res);
+    // console.log('onGetSettings_fn', res);
+  }
 
   const addTotalProbability = (rewards) => {
     const totalProbability = rewards.reduce((sum, reward) => sum + reward.qty, 0);
@@ -41,6 +51,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
     }
     __query();
     onGetGifts();
+    onGetSettings_fn();
 
     const l = listennerCollection('gifts', (res) => {
       // console.log(res);
@@ -48,8 +59,13 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
       // getGifts(res);
     });
 
+    const s = listennerDocument('settings', 'global_settings', (res) => {
+      setAppSettings(res);
+    })
+
     return () => {
       l();
+      s();
     }
   }, [])
 
@@ -128,6 +144,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
 
   const value = {
     version: '1.0.0',
+    appSettings, setAppSettings,
     teleUser: WebApp.initDataUnsafe,
     user, setUser,
     gifts, setGifts,

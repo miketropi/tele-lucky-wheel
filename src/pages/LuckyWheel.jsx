@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function LuckyWheel() {
   const navigation = useNavigate();
-  const { user, gifts, giftColors, setReward, fn } = useLuckyWheelContext(); 
+  const { user, gifts, giftColors, setReward, fn, appSettings } = useLuckyWheelContext(); 
   const { onUpdateUserGift } = fn;
 
   const wheel = (
@@ -24,7 +24,7 @@ export default function LuckyWheel() {
   )
 
   return <>
-    <div className="background-layer"></div> 
+    <div className="background-layer" style={{ background: `url(${ appSettings?.game_bg }) no-repeat center center` }}></div> 
     <div className="luckywheel-container __container">
       <div className="__container__inner-transparent">
         { wheel }

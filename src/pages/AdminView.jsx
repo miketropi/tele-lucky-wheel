@@ -4,11 +4,11 @@ import '../AdminView.scss';
 
 const GiftsTable = ({ gifts }) => {
   const { editSlot, setEditSlot, fn } = useAdminViewContext();
-  const { onUpdateQtyGift } = fn;
+  const { onUpdateQtyGift, onAddReward, onUpdateNameGift, onDeleteRewardItem } = fn;
   
   return <>
     <h4>Rewards</h4>
-    <table className="table">
+    <table className="table __align-middle">
       <thead>
         <tr>
           <th>
@@ -19,14 +19,29 @@ const GiftsTable = ({ gifts }) => {
           <th>Name</th>
           <th>Slot</th>
           <th>Xác suất (%)</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {
+          gifts.length > 0 && 
           gifts.map((g, index) => {
             return <tr key={ g.__id }>
               <td>{ index + 1 }</td>
-              <td>{ g?.name }</td>
+              <td>
+                {/* { g?.name } */}
+                {
+                  (() => {
+                    if(editSlot) {
+                      return <input style={{ width: `70px` }} type="text" value={ g?.name } onChange={ e => {
+                        onUpdateNameGift(g.__id, e.target.value)
+                      } } />
+                    } else {
+                      return g?.name;
+                    }
+                  })()
+                }
+              </td>
               <td>
                 {/* { g?.qty }  */}
                 {
@@ -43,11 +58,28 @@ const GiftsTable = ({ gifts }) => {
                 
               </td>
               <td>{ g?.probability }%</td>
+              <td>
+                {
+                  editSlot && <button className="button" onClick={ e => {
+                    e.preventDefault();
+                    let r = confirm('Delete this reward???');
+                    if(r == true) {
+                      onDeleteRewardItem(g.__id)
+                    }
+                  } }>Delete</button>
+                }
+              </td>
             </tr>
           })
         }
       </tbody>
     </table>
+    {
+      editSlot && <button className="button" onClick={ async e => {
+        e.preventDefault();
+        await onAddReward();
+      } }>Add more reward</button>
+    }
   </>
 }
 
@@ -93,8 +125,23 @@ const LogsTables = ({ data }) => {
 }
 
 const UsersTables = ({ users }) => {
+  const { editSlot, fn } = useAdminViewContext();
+  const { onClearAllUser } = fn;
+
   return <>
-    <h4>Người tham gia ({ users.length })</h4>
+    <h4>Người tham gia ({ users.length })</h4> 
+    {
+      editSlot && <>
+        <button className="button" onClick={ e => {
+          const r = confirm('Delete all users???')
+          if(r) {
+            onClearAllUser();
+          }
+        } }>Reset Users</button>
+        <hr style={{ margin: `1em 0` }} />
+      </>
+    }
+    
     <table className="table">
       <thead>
         <tr>
@@ -114,8 +161,8 @@ const UsersTables = ({ users }) => {
               <td>
                 <div className="__userinfo_area">
                 {
-                  user?.update_info && Object.keys(user?.update_info).map(__k => {
-                    return <p>{ __k }: <strong>{ user?.update_info[__k] }</strong></p>
+                  user?.update_info && Object.keys(user?.update_info).map((__k, __k_index) => {
+                    return <p key={ __k_index }>{ __k }: <strong>{ user?.update_info[__k] }</strong></p>
                   })
                 }
                 </div>
@@ -130,6 +177,52 @@ const UsersTables = ({ users }) => {
   </>
 }
 
+const TableSettings = () => {
+  const { editSlot, appSettings, fn } = useAdminViewContext();
+  const { onUpdateSetting } = fn;
+  return <>
+    <h4>Game Settings</h4>
+    {/* {
+      JSON.stringify(appSettings)
+    } */}
+    <table className="table __align-middle">
+      <tbody>
+        <tr>
+          <th>Game Status</th>
+          <td>
+            {
+              editSlot ? <>
+              <select value={ appSettings?.game_status } onChange={ e => {
+                onUpdateSetting('global_settings', {
+                  game_status: e.target.value,
+                })
+              } }>
+                <option value="on">On</option>
+                <option value="off">Off</option>
+              </select>
+              </> : appSettings?.game_status
+            }
+          </td>
+        </tr>
+        <tr>
+          <th>Background App:</th>
+          <td>
+            {
+              editSlot ? <>
+                <input type="text" value={ appSettings?.game_bg } style={{ width: `100%` }} onChange={ e => {
+                  onUpdateSetting('global_settings', {
+                    game_bg: e.target.value,
+                  })
+                } } />
+              </> : <a href={ appSettings?.game_bg } target="_blank">{ appSettings?.game_bg }</a>
+            }
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </>
+}
+
 export default function AdminView() {
   const { users, gifts, logs, fn } = useAdminViewContext();
   const { onTestReward } = fn;
@@ -137,7 +230,11 @@ export default function AdminView() {
     <div className="container">
       <div className="cont-2cols">
         <div className="l-col">
-          <div className="__sticky"><GiftsTable gifts={ gifts } /></div>
+          <div className="__sticky">
+            <GiftsTable gifts={ gifts } />
+            <hr style={{ marginTop: `32px` }} />
+            <TableSettings />
+          </div>
           {/* <button className="button" onClick={ onTestReward }>Test Reward</button> */}
           {/* <hr />
           {
@@ -148,7 +245,8 @@ export default function AdminView() {
           } */}
         </div>
         <div className="r-col">
-          <UsersTables users={ users.filter(u => u.gift) } />
+          {/* <UsersTables users={ users.filter(u => u.gift) } /> */}
+          <UsersTables users={ users } />
         </div>
       </div>
     </div>
