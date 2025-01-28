@@ -74,6 +74,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
       tele_userinfo_full: teleUser, 
       teleuid: teleUser?.id,
       gift: '',
+      cuoc: 1,
       update_info: {},
     }
     const uid = await addUser(newUser);
@@ -142,6 +143,12 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
     })
   } 
 
+  const onUpdateCuocNumber = async (cuoc) => {
+    await updateUser(user.__id, {
+      cuoc
+    })
+  }
+
   const value = {
     version: '1.0.0',
     appSettings, setAppSettings,
@@ -156,6 +163,7 @@ const LuckyWheelContextPrivider = ({ children, WebApp }) => {
       onUpdateUserInfo,
       onSpin,
       onSpin2,
+      onUpdateCuocNumber,
     }
   }
 

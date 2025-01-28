@@ -148,6 +148,7 @@ const UsersTables = ({ users }) => {
           <td>#</td>
           <td>User</td> 
           <td>Information</td> 
+          <td>Cược</td> 
           <td>Reward</td>
         </tr>
       </thead>
@@ -168,6 +169,7 @@ const UsersTables = ({ users }) => {
                 </div>
                 {/* <p>discord_id: { user?.update_info?.discord_id }</p> */}
               </td> 
+              <td>{ user?.cuoc }</td>
               <td>{ user?.gift }</td>
             </tr>
           })

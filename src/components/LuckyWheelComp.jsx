@@ -4,7 +4,7 @@ import { Wheel } from 'react-custom-roulette';
 import { useNavigate } from "react-router-dom";
 
 
-export default function LuckyWheelComp({ onHandleSpinFinish }) {
+export default function LuckyWheelComp({ onHandleSpinFinish, onStart }) {
   const nav = useNavigate(); 
   const { gifts, giftColors, fn, error, setError } = useLuckyWheelContext();
   const { onSpin, onSpin2 } = fn;
@@ -65,6 +65,7 @@ export default function LuckyWheelComp({ onHandleSpinFinish }) {
   }
 
   const handleSpinClick = async () => {
+    onStart()
     if (!mustSpin) {  
       setIsStart(true);
     } 
