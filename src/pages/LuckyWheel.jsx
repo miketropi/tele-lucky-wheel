@@ -10,7 +10,7 @@ const CuocPopup = ({ active, onConfirm }) => {
   return <>
     <div className={ ['cuoc-popup', active ? '__active' : ''].join(' ') }>
       <div className="cuoc-popup__inner">
-        <h4>Nhập số ngày muốn cược.</h4>
+        <h4>Nhập số tháng muốn cược.</h4>
         {/* { JSON.stringify(user) } */}
         <p>
           <input type="number" value={ user?.cuoc } onChange={ e => {
@@ -23,7 +23,7 @@ const CuocPopup = ({ active, onConfirm }) => {
            onUpdateCuocNumber(e.target.value);
           } } />
         </p>
-        <button onClick={ onConfirm } className={ ['button', (user.cuoc ? '' : '__btn-disable')].join(' ') }>Xác Nhận { user.cuoc ? `(${ user.cuoc } ngày)` : '' }</button>
+        <button onClick={ onConfirm } className={ ['button', (user.cuoc ? '' : '__btn-disable')].join(' ') }>Xác Nhận { user.cuoc ? `(${ user.cuoc } tháng)` : '' }</button>
       </div>
     </div>
   </>
@@ -60,7 +60,12 @@ export default function LuckyWheel() {
       <div className="__container__inner-transparent">
         { 
           cuocPopup == false ? <>
-            <strong style={{ textAlign: 'center', display: 'block', width: '100%' }}>Bạn đã cược { user.cuoc } ngày. { lock ? '' : <u style={{ cursor: 'pointer' }} onClick={ e => {
+            <strong style={{ 
+              textAlign: 'center', 
+              display: 'block', 
+              width: '100%',
+              background: 'black',
+              color: 'white', }}>Bạn đã cược { user.cuoc } tháng. { lock ? '' : <u style={{ cursor: 'pointer' }} onClick={ e => {
               setCuocPopup(true) 
             } }>Chọn lại 👈</u> }</strong>
           </> : ''

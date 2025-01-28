@@ -42,7 +42,7 @@ export default function Welcome() {
     <div className="welcome-container __container">
       <div className="__container__inner">
         <h4 className="h-title">Welcome <u>{ user?.tele_userinfo_full?.username }</u>,</h4>
-        <p>A1A team chúc bạn một mùa giáng sinh an lành, Merry Christmas and Happy New Year. 🎉</p>
+        <p>A1A team chúc bạn một năm mới an khang thịnh vượng - vạn sự như ý, Happy New Year. 🎉</p>
         <button className="button" onClick={ e => {
           e.preventDefault();
           navigate('./update-userinfo')
