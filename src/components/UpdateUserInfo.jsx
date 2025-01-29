@@ -26,10 +26,11 @@ export default function UpdateUserInfo() {
       e.preventDefault();
       // alert(JSON.stringify(user.update_info))
       await onUpdateUserInfo(user.update_info); 
-      // let giftsAvailable = gifts.filter(g => g.qty > 0).length;
-      // let directUrl = user.gift ? '/thankyou' : (giftsAvailable == 0 ? '/endgame' : '/luckywheel');
-      let directUrl = '/updateinfo2';
+      let giftsAvailable = gifts.filter(g => g.qty > 0).length;
+      let directUrl = user.gift ? '/thankyou' : (giftsAvailable == 0 ? '/endgame' : '/luckywheel');
+      // let directUrl = '/updateinfo2';
       navigate(directUrl)
+
     } }>
       <p>
         <label>Họ và tên*</label>
@@ -65,7 +66,7 @@ export default function UpdateUserInfo() {
       </p>
       <p className="form-actions">
         {/* <Link to="/">Trở về</Link>  */}
-        <button className="button" type="submit">👉 Tiếp theo</button>
+        <button className="button" type="submit">👉 Quay Thưởng</button>
       </p>
     </form>
   </div>
